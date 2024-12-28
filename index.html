@@ -13,29 +13,33 @@
         <h1>Tic Tac Toe Melhorado - T0madon</h1>
       </header>
       <div class="dados flex align-center justify-between padding-padrao">
-        <label for="player1">Player 1 (X)</label>
+        <label for="player1"><span>Player 1 (X)</span></label>
         <input type="text" name="names" id="player1" />
         <br />
-        <label for="player2">Player 2 (O)</label>
+        <label for="player2"><span>Player 2 (O)</span></label>
         <input type="text" name="names" id="player2" />
       </div>
-      <button id="begin">Começar</button>
-      <button>TESTE</button>
-      <h2>
-        Vez de:
-        <span id="turnPlayer"></span>
-      </h2>
 
-      <div id="jogo" class="flex">
-        <span data-region="0.0"></span>
-        <span data-region="0.1"></span>
-        <span data-region="0.2"></span>
-        <span data-region="1.0"></span>
-        <span data-region="1.1"></span>
-        <span data-region="1.2"></span>
-        <span data-region="2.0"></span>
-        <span data-region="2.1"></span>
-        <span data-region="2.2"></span>
+      <div id="game">
+        <button id="begin" class="flex align-center justify-between">
+          <span>Começar</span>
+        </button>
+        <h2>
+          Vez de:
+          <span id="turnPlayer"></span>
+        </h2>
+
+        <div id="jogo" class="flex">
+          <span data-region="0.0"></span>
+          <span data-region="0.1"></span>
+          <span data-region="0.2"></span>
+          <span data-region="1.0"></span>
+          <span data-region="1.1"></span>
+          <span data-region="1.2"></span>
+          <span data-region="2.0"></span>
+          <span data-region="2.1"></span>
+          <span data-region="2.2"></span>
+        </div>
       </div>
     </main>
   </body>
