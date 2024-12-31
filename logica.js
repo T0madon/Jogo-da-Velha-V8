@@ -111,6 +111,10 @@ function cliqueNaVelha(ev) {
   }
 
   desabilita(quadrado);
+  const winRegions = verificaWin();
+
+  if (winRegions.length > 0) {
+  }
 }
 
 document.getElementById("begin").addEventListener("click", inicializar);
