@@ -1,11 +1,9 @@
 const boardRegions = document.querySelectorAll("#jogo span");
-console.log(boardRegions[0]);
 let vBoard = [];
 let lastwin = "player2";
 let turnPlayer = "";
 
 function atualizaTitulo() {
-  turnPlayer = lastwin === "player2" ? "player1" : "player2";
   const playerInput = document.getElementById(turnPlayer);
   document.getElementById("turnPlayer").innerText = playerInput.value;
 }
@@ -16,8 +14,9 @@ function inicializar() {
     ["", "", ""],
     ["", "", ""],
   ];
+  turnPlayer = lastwin === "player2" ? "player1" : "player2";
   document.querySelector("h2").innerHTML =
-    'Vez de: <span id="turnPlayer></span>"';
+    'Vez de: <span id="turnPlayer"></span>';
   atualizaTitulo();
 
   boardRegions.forEach(function (element) {
@@ -27,10 +26,20 @@ function inicializar() {
   });
 }
 
-function verificaTab() {
-  console.log();
-}
+function cliqueNaVelha(ev) {
+  const quadrado = ev.currentTarget;
+  const regiao = quadrado.dataset.region;
+  const coordenada = regiao.split(".");
+  const linha = coordenada[0];
+  const coluna = coordenada[1];
 
-function cliqueNaVelha(ev) {}
+  if (turnPlayer === "player1") {
+    quadrado.innerText = "X";
+    vBoard[linha][coluna] = "X";
+  } else {
+    quadrado.innerText = "O";
+    vBoard[linha][coluna] = "O";
+  }
+}
 
 document.getElementById("begin").addEventListener("click", inicializar);
