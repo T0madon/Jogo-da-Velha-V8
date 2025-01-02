@@ -93,6 +93,16 @@ function desabilita(elemento) {
   elemento.removeEventListener("click", cliqueNaVelha);
 }
 
+function finaliza(regions) {
+  regions.forEach(function (region) {
+    document
+      .querySelector('[data-region="' + region + '"]')
+      .classList.add("win");
+  });
+  const playerName = document.getElementById(turnPlayer).value;
+  document.querySelector("h2").innerHTML = playerName + " venceu!!";
+}
+
 function cliqueNaVelha(ev) {
   const quadrado = ev.currentTarget;
   const regiao = quadrado.dataset.region;
@@ -114,6 +124,11 @@ function cliqueNaVelha(ev) {
   const winRegions = verificaWin();
 
   if (winRegions.length > 0) {
+    finaliza(winRegions);
+  } else if (vBoard.flat().includes("")) {
+    // CONTINUA O JOGO
+  } else {
+    // EMPATE
   }
 }
 
