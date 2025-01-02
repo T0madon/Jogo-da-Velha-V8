@@ -7,10 +7,17 @@ let player2J = [];
 let resetRegion;
 
 function inicializar() {
-  while (player1J.length && player2J.length) {
+  resetRegion = 0;
+
+  while (player1J.length) {
     player1J.pop();
+  }
+  while (player2J.length) {
     player2J.pop();
   }
+
+  console.log(`Começo de jogo\nplayer1: ${player1J}\nplayer2: ${player2J}`);
+
   vBoard = [
     ["", "", ""],
     ["", "", ""],
@@ -114,8 +121,8 @@ function verificaWin() {
 }
 
 function habilita(elemento) {
-  console.log(elemento);
-  console.log(typeof elemento);
+  console.log(`Vou habilitar ${elemento}`);
+
   const celula = document.querySelector('[data-region="' + elemento + '"]');
 
   celula.classList.remove("exit");
