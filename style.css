@@ -48,6 +48,10 @@ main {
   background-color: rgb(17, 145, 17);
 }
 
+#jogo span.exit {
+  background-color: rgb(107, 118, 121);
+}
+
 h1,
 h2,
 span,

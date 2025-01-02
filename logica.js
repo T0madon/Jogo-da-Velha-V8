@@ -4,8 +4,13 @@ let lastwin = "player2";
 let turnPlayer = "";
 let player1J = [];
 let player2J = [];
+let resetRegion;
 
 function inicializar() {
+  while (player1J.length && player2J.length) {
+    player1J.pop();
+    player2J.pop();
+  }
   vBoard = [
     ["", "", ""],
     ["", "", ""],
@@ -18,14 +23,32 @@ function inicializar() {
 
   boardRegions.forEach(function (element) {
     element.classList.remove("win");
+    element.classList.remove("exit");
     element.innerText = "";
     element.addEventListener("click", cliqueNaVelha);
   });
 }
 
 function atualizaTitulo() {
-  const playerInput = document.getElementById(turnPlayer);
+  const playerInput = document.getElementById(turnPlayer); //Nome do jogador
   document.getElementById("turnPlayer").innerText = playerInput.value;
+
+  if (turnPlayer === "player1" && player1J.length == 3) {
+    const coord = player1J[0]; //0.0
+    // const par = coord.split("."); -> ["0", "0"]
+    document
+      .querySelector('[data-region="' + coord + '"]')
+      .classList.add("exit");
+    resetRegion = player1J.shift();
+  }
+  if (turnPlayer === "player2" && player2J.length == 3) {
+    const coord = player2J[0]; //0.0
+    // const par = coord.split("."); -> ["0", "0"]
+    document
+      .querySelector('[data-region="' + coord + '"]')
+      .classList.add("exit");
+    resetRegion = player2J.shift();
+  }
 }
 
 function verificaWin() {
@@ -90,6 +113,22 @@ function verificaWin() {
   return winRegions;
 }
 
+function habilita(elemento) {
+  console.log(elemento);
+  console.log(typeof elemento);
+  const celula = document.querySelector('[data-region="' + elemento + '"]');
+
+  celula.classList.remove("exit");
+  celula.style.cursor = "pointer";
+  celula.innerText = "";
+  celula.addEventListener("click", cliqueNaVelha);
+
+  const dupla = elemento.split(".");
+  linha = dupla[0];
+  coluna = dupla[1];
+  vBoard[linha][coluna] = "";
+}
+
 function desabilita(elemento) {
   elemento.style.cursor = "default";
   elemento.removeEventListener("click", cliqueNaVelha);
@@ -109,10 +148,12 @@ function finaliza(regions) {
 
 function cliqueNaVelha(ev) {
   const quadrado = ev.currentTarget;
-  const regiao = quadrado.dataset.region;
-  const coordenada = regiao.split(".");
+  const regiao = quadrado.dataset.region; // N.N
+  const coordenada = regiao.split("."); //["N", "N"]
   const linha = coordenada[0];
   const coluna = coordenada[1];
+
+  if (resetRegion) habilita(resetRegion);
 
   if (turnPlayer === "player1") {
     quadrado.innerText = "X";
