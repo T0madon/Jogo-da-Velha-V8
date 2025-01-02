@@ -2,6 +2,31 @@ const boardRegions = document.querySelectorAll("#jogo span");
 let vBoard = [];
 let lastwin = "player2";
 let turnPlayer = "";
+let player1J = [];
+let player2J = [];
+
+function inicializar() {
+  vBoard = [
+    ["", "", ""],
+    ["", "", ""],
+    ["", "", ""],
+  ];
+  turnPlayer = lastwin === "player2" ? "player1" : "player2";
+  document.querySelector("h2").innerHTML =
+    'Vez de: <span id="turnPlayer"></span>';
+  atualizaTitulo();
+
+  boardRegions.forEach(function (element) {
+    element.classList.remove("win");
+    element.innerText = "";
+    element.addEventListener("click", cliqueNaVelha);
+  });
+}
+
+function atualizaTitulo() {
+  const playerInput = document.getElementById(turnPlayer);
+  document.getElementById("turnPlayer").innerText = playerInput.value;
+}
 
 function verificaWin() {
   const winRegions = [];
@@ -65,29 +90,6 @@ function verificaWin() {
   return winRegions;
 }
 
-function atualizaTitulo() {
-  const playerInput = document.getElementById(turnPlayer);
-  document.getElementById("turnPlayer").innerText = playerInput.value;
-}
-
-function inicializar() {
-  vBoard = [
-    ["", "", ""],
-    ["", "", ""],
-    ["", "", ""],
-  ];
-  turnPlayer = lastwin === "player2" ? "player1" : "player2";
-  document.querySelector("h2").innerHTML =
-    'Vez de: <span id="turnPlayer"></span>';
-  atualizaTitulo();
-
-  boardRegions.forEach(function (element) {
-    element.classList.remove("win");
-    element.innerText = "";
-    element.addEventListener("click", cliqueNaVelha);
-  });
-}
-
 function desabilita(elemento) {
   elemento.style.cursor = "default";
   elemento.removeEventListener("click", cliqueNaVelha);
@@ -99,8 +101,10 @@ function finaliza(regions) {
       .querySelector('[data-region="' + region + '"]')
       .classList.add("win");
   });
-  const playerName = document.getElementById(turnPlayer).value;
-  document.querySelector("h2").innerHTML = playerName + " venceu!!";
+  const playerName = document.getElementById(turnPlayer);
+  document.querySelector("h2").innerHTML = playerName.value + " venceu!!";
+  lastwin = turnPlayer;
+  turnPlayer = lastwin === "player2" ? "player1" : "player2";
 }
 
 function cliqueNaVelha(ev) {
@@ -113,22 +117,27 @@ function cliqueNaVelha(ev) {
   if (turnPlayer === "player1") {
     quadrado.innerText = "X";
     vBoard[linha][coluna] = "X";
-    turnPlayer = "player2";
+    player1J.push(regiao);
+    console.log(`player1J: ${player1J}`);
   } else {
     quadrado.innerText = "O";
     vBoard[linha][coluna] = "O";
-    turnPlayer = "player1";
+    player2J.push(regiao);
+    console.log(`player2J: ${player2J}`);
   }
 
   desabilita(quadrado);
   const winRegions = verificaWin();
 
   if (winRegions.length > 0) {
+    // Um jogador ganhou
     finaliza(winRegions);
   } else if (vBoard.flat().includes("")) {
-    // CONTINUA O JOGO
+    // Jogo continua
+    turnPlayer = turnPlayer === "player1" ? "player2" : "player1";
+    atualizaTitulo();
   } else {
-    // EMPATE
+    document.querySelector("h2").innerHTML = "EMPATE";
   }
 }
 
