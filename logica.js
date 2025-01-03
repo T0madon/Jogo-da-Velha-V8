@@ -29,6 +29,7 @@ function inicializar() {
   atualizaTitulo();
 
   boardRegions.forEach(function (element) {
+    element.style.cursor = "pointer";
     element.classList.remove("win");
     element.classList.remove("exit");
     element.innerText = "";
