@@ -7,6 +7,7 @@ let player2J = [];
 let resetRegion;
 
 function inicializar() {
+  console.log("Início");
   resetRegion = 0;
 
   while (player1J.length) {
