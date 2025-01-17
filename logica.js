@@ -16,7 +16,7 @@ function inicializar() {
     player2J.pop();
   }
 
-  console.log(`Começo de jogo\nplayer1: ${player1J}\nplayer2: ${player2J}`);
+  // console.log(`Começo de jogo\nplayer1: ${player1J}\nplayer2: ${player2J}`);
 
   vBoard = [
     ["", "", ""],
@@ -122,7 +122,7 @@ function verificaWin() {
 }
 
 function habilita(elemento) {
-  console.log(`Vou habilitar ${elemento}`);
+  // console.log(`Vou habilitar ${elemento}`);
 
   const celula = document.querySelector('[data-region="' + elemento + '"]');
 
@@ -138,6 +138,7 @@ function habilita(elemento) {
 }
 
 function desabilita(elemento) {
+  console.log(`Vou desabilitar ${elemento}`);
   elemento.style.cursor = "default";
   elemento.removeEventListener("click", cliqueNaVelha);
 }
@@ -167,12 +168,12 @@ function cliqueNaVelha(ev) {
     quadrado.innerText = "X";
     vBoard[linha][coluna] = "X";
     player1J.push(regiao);
-    console.log(`player1J: ${player1J}`);
+    // console.log(`player1J: ${player1J}`);
   } else {
     quadrado.innerText = "O";
     vBoard[linha][coluna] = "O";
     player2J.push(regiao);
-    console.log(`player2J: ${player2J}`);
+    // console.log(`player2J: ${player2J}`);
   }
 
   desabilita(quadrado);
@@ -181,12 +182,21 @@ function cliqueNaVelha(ev) {
   if (winRegions.length > 0) {
     // Um jogador ganhou
     finaliza(winRegions);
+
+    const quadrados = document.querySelectorAll("span[data-region]");
+    quadrados.forEach((quadrado) => {
+      desabilita(quadrado);
+    });
   } else if (vBoard.flat().includes("")) {
     // Jogo continua
     turnPlayer = turnPlayer === "player1" ? "player2" : "player1";
     atualizaTitulo();
   } else {
     document.querySelector("h2").innerHTML = "EMPATE";
+    const quadrados = document.querySelectorAll("span[data-region]");
+    quadrados.forEach((quadrado) => {
+      desabilita(quadrado);
+    });
   }
 }
 
